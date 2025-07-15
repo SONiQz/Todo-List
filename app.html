@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Add Task</title>
+<!-- Import of jQuery lib, indexeddb lib as provided and css> -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="js/indexeddb.js"></script>
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+	<main>
+	<nav>
+	</nav>
+	<!-- Start of Add Task Form -->
+	<section id = "addTask">
+	<h2>Add Task</h2>
+	<form id="addForm" method="POST">
+		<table id="table1">
+			<tr>
+				<td colspan="3">
+					<label for="title">Title:</label>
+					<input id="title" type="text" required>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<label for="description">Description:</label>
+					<textarea id="description" rows="4" cols="50" required></textarea>
+				</td>
+			</tr>
+			</table>
+			<table id="table2">
+			<tr>
+				<td>
+					<label for="date">Date:</label>
+					<input id="date" type="date" required>
+				</td>
+				<td>
+			<!-- dropdown for Priority -->
+					<label for="priority">Priority:</label>
+					<select id="priority" required>
+						<option value="" disabled="true"> -- Select Priority -- </option>
+						<option value="Urgent">Urgent</option>
+						<option value="High">High</option>
+						<option value="Moderate">Moderate</option>
+						<option value="Low">Low</option>
+						<option value="Very Low">Very Low</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>				
+					<label for="time">Time:</label>
+					<input id="time" type="time" required><br>
+				</td>
+				<td>
+					
+					<label for="status">Status:</label>
+					<select id="status" required>
+						<option value="" disabled="true"> -- Select a Status -- </option>
+						<option value="Open">Open</option>
+						<option value="Close">Closed</option>
+						<option value="In Progress">In Progress</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" id="tableBrowse">
+					<label for="image">Select Image:</label>
+					<input type="file" id="image">
+				</td>
+			</tr>
+			<tr>
+				<td id="bottomButtons" colspan="4">
+					<!-- calls submit function in database.js to store input data -->
+					<input id = "addButton" type="submit" value="Add">
+					<!-- Cancel button, calling js in views.js to display Task List table
+					additionally validation rules are ignored and no content submitted -->
+					<button id = "canButton" onclick="viewTasks(); location.reload(); return false;" formnovalidate>Cancel</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	</section>
+	
+	<!-- Start of Task List Table -->
+
+	<section id="taskList">
+	<h2> Task List </h2>
+	<p>
+	Below are the currently registered tasks.<br>
+	Please use the Add & Delete buttons to create or delete entries.
+	</p>
+	<!-- Table header, actual data is injected using an append call in database.js -->
+	<table border="0" id="tableAllTasks" cellpadding="5" cellspacing="0">
+		<tr class="aligncenter" style="font-weight:bold;">
+			<th style="display:none"> Id </th>
+			<th>Select</th>
+			<th>Title</th>
+			<th style="display: none">Description</th>
+			<th onclick="taskSorting(4);">Date</th>
+			<th>Time</th>
+			<th onclick="taskSorting(6);">Priority</th>
+			<th>Status</th>
+			<th>Image</th>
+			<th></th>
+		</tr>
+	</table>
+	<table width="100%	">
+		<tr>
+			<td id = "bottomButtons"  style="border: none;">
+				<button id="addButton" onclick="viewAdd()">Add</button>
+				<button id="delButton" onclick="taskDelete(); location.reload();">Delete</button>
+			</td>
+		</tr>
+	</table>
+	
+	</section>	
+	<!-- start of update data form -->
+	<section id="updateTask">
+	<h2> Update Task </h2>
+	<form id="updateForm" method="POST">
+		<table id="table1">
+			<tr>
+				<td colspan="3">
+					<label for="updid">ID</label>
+					<input id="updid" type="text" readonly>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<label for="updtitle">Title</label>
+					<input id="updtitle" type="text" required><br>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<label for="upddescription">Description</label>
+					<textarea id="upddescription" rows="4" cols="50" required></textarea>
+				</td>
+			</tr>
+		</table>
+		<table id="table2">
+			<tr>
+				<td>	
+					<label for="upddate">Date</label>
+					<input id="upddate" type="date" required>
+				</td>
+				<td>
+					<label for="updpriority">Priority</label>
+					<select id="updpriority" required>
+						<option value="" disabled="true"> -- Select Priority -- </option>
+						<option value="Urgent">Urgent</option>
+						<option value="High">High</option>
+						<option value="Moderate">Moderate</option>
+						<option value="Low">Low</option>
+						<option value="Very Low">Very Low</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="updtime">Time</label>
+					<input id="updtime" type="time" required><br>
+				</td>
+				<td>
+					<label for="updstatus">Status</label>
+					<select id="updstatus" required>
+						<option value="" disabled="true"> -- Select a Status -- </option>
+						<option value="Open">Open</option>
+						<option value="Closed">Closed</option>
+						<option value="In Progress">In Progress</option>
+					</select>
+				</td>
+			</tr>
+			<tr id="viewImage">
+			</tr>
+			<tr>
+				<td colspan="2" id="tableBrowse">
+					<label for="updimage">Select Image:</label>
+					<input type="file" id="updimage">
+				</td>
+			</tr>
+			<tr>
+				<td id="bottomButtons" colspan="4">
+					<!-- calls submit function in database.js to store input data -->
+					<input id="addButton" type="submit" value="Update">
+					<!-- Cancel button, calling js in views.js to display Task List table
+					additionally validation rules are ignored and no content submitted -->
+					<button id="canButton" onclick="viewTasks(); location.reload(); return false;" formnovalidate>Cancel</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	</section>
+	<!-- import other js after content -->
+	<script src="js/database.js"></script>
+	<script src="js/views.js"></script>
+	</main>
+</body>
+</html>

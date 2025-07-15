@@ -1,0 +1,171 @@
+var request = indexedDB.open('taskManager', 1);
+
+request.onupgradeneeded = function(event){
+	console.log("Running Upgrade on taskManager")
+	var taskDb = event.target.result;
+	
+	if(!taskDb.objectStoreNames.contains("tasks")){
+		console.log("tasks table missing, updating...");
+		var objectStore = taskDb.createObjectStore("tasks", {autoIncrement: true});
+		objectStore.createIndex("tasks", "tasks", {unique: false });
+	}
+
+function saveTaskData(){
+	var title = $('#title').val();
+	var description = $('#description').val();
+	var date = $('#date').val();
+	var time = $('#time').val();
+	var priority = $('#priority').val();
+	var status = $('#status').val();
+	var image = $('#image').val();
+    
+	var task = {
+		'title':title,
+		'description':description,
+		'date':date,
+		'time':time,
+		'priority':priority,
+		'status':status,
+		'image': image
+	};
+
+	var fileInput = $('#image');
+	var selectedFile = fileInput.get(0).files[0];
+	
+	if (typeof selectedFile != 'undefined')
+		task.image = selectedFile;
+
+	insertOne(task, function(lastID) {
+		event.preventDefault();
+		return false;
+	});
+}
+
+
+$('#addForm').submit(function(event){
+    event.preventDefault();
+	setDatabaseName('taskManager', ['tasks']);
+	setCurrObjectStoreName('tasks');
+	startDB(function () {
+		saveTaskData();
+		alert("Item has been saved successfully!");
+	});
+});
+
+
+function viewUpdateTask(id){
+	setDatabaseName=('taskManager', ['tasks']);
+	setCurrObjectStoreName('tasks');
+	var updtask;
+	startDB(function() {
+		selectOne(id, function(result) {
+			$('#updid').val(id);
+			$('#updtitle').val(result.title);
+			$('#upddescription').val(result.description);
+			$('#upddate').val(result.date);
+			$('#updtime').val(result.time);
+			$('#updpriority').val(result.priority);
+			$('#updstatus').val(result.status);
+			$('#updimage').val();
+			updtask = result;
+		})
+		viewUpdate();
+	})
+}
+
+function saveUpdateTask(updtask, id) {
+	var id = +$('#updid').val()
+	var title = $('#updtitle').val();
+	var description = $('#upddescription').val();
+	var date = $('#upddate').val();
+	var time = $('#updtime').val();
+	var priority = $('#updpriority').val();
+	var status = $('#updstatus').val();
+	var image = $('#updimage').val();
+	var task = {
+		'title':title,
+		'description':description,
+		'date':date,
+		'time':time,
+		'priority':priority,
+		'status':status,
+		'image': image
+	};
+	if (typeof selectedFile != 'undefined')
+		task.image = selectedFile;
+	
+	var objectStore = db.transaction(['tasks'], "readwrite").objectStore('tasks');
+	objectStore.openCursor(+id).onsuccess = function(event){
+		var cursor = event.target.result;
+		if (cursor && cursor.key == id){
+			cursor.update(Object.assign(cursor.value, task));
+			cursor.continue();
+			
+		};
+	}
+}
+
+$('#updateForm').submit(function(event){
+	event.preventDefault();
+	setDatabaseName('taskManager', ['tasks']);
+	setCurrObjectStoreName('tasks');
+	startDB(function(){
+		saveUpdateTask();
+		alert("Task has been Updated Successfully");
+	});
+});
+
+function showAllTasks() {
+	selectAll(function(results) {
+		var len = results.length, i;
+		for(i = 0; i < len; i++) {
+			if (!results[i].image){
+				var image_url = "img/henohere.png"
+			} else {
+				var image_url = window.URL.createObjectURL(results[i].image);
+			}
+			var id = results[i].id;
+			var image_id = "image-" + id;
+			$('#tableAllTasks').append(
+				'<tr id="' + id + '">\
+					<td class="id">' + id + '</td>\
+					<td><input type="checkbox"></td>\
+					<td class="title">' + results[i].title + '</td>\
+					<td class="description">' + results[i].description + '</td>\
+					<td class="date">' + results[i].date + '</td>\
+					<td class="time">' + results[i].time + '</td>\
+					<td class="priority">' + results[i].priority + '</td>\
+					<td class="status">' + results[i].status + '</td>\
+					<td class="image">' + '<img id=' + image_id + ' src="' + image_url + '" height="50px" width="50px"/></td>\
+					<td><input type="button" value="View" onclick="viewUpdateTask(' + id + ');"></td>\
+				</tr>'
+			)}
+		$('#tableAllTasks').append(
+			'<tr>\
+			<td colspan="9" style="border: none;"><button onclick="viewAdd()">Add</button><button onclick="taskDelete()">Delete</button></td>\
+			</tr>'
+			)
+		};
+	)
+}
+
+
+function taskDelete(){
+	var checkBoxes = $('input[type=checkbox]')
+	var numrow = $('input[type=checkbox]').length;
+	for(i = 0; i < numrow; i += 1) {
+		if (checkBoxes[i].checked){
+			var row = checkBoxes[i].parentNode.parentNode;
+			id = (row.cells[0].innerHTML);
+			deleteOne(+id);
+		}
+	$("#taskList").load("#taskList > *");
+	};
+}
+
+
+setDatabaseName('taskManager', ['tasks']);
+setCurrObjectStoreName('tasks');
+startDB(function () {
+	showAllTasks();
+});

@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">	
+<title>Task Manager CT4009-001</title>
+<!-- <link href="css/index.css" rel="stylesheet" type="text/css">
+<script src="js/pagecontrol.js" type="text/javascript"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/pouchdb@7.2.1/dist/pouchdb.min.js"></script>	
+
+</head>
+<body>
+<header>
+    <h1>Task Manager for CT4009-001</h1>
+	<nav>
+	  <button onclick="viewtasklist()">View All Tasks</button>
+   	  <button onclick="addnewtask()">Add New Task</button>
+	</nav>
+    </header>
+    <main>
+		<section id="addTask">
+			<form id="taskForm" method="post">
+				<button type="button">Edit Task</button>
+                <button type="button">Delete Task</button>
+            <p>
+                <label for="tasktitle">Title:</label>
+                <input type="text" id="tasktitle" name="tasktitle" placeholder="Task Title" value="">
+            </p>
+            <p>
+                <label for="description">Task Description:</label>
+                <textarea id="description" name="description" cols="30" rows="5" placeholder="Add Task Description" required></textarea>
+            </p>
+            <p>
+				<label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+				<label for="time">Time:</label>
+                <input type="time" id="time" name="time">
+            </p>
+			<p>
+				<label for="priority">Priority</label>
+				<select id="priority" name="priority" required>
+					<option value="" disabled="true"> -- Select Priority -- </option>
+					<option value="urgent">Urgent</option>
+					<option value="high">High</option>
+					<option value="moderate">Moderate</option>
+					<option value="low">Low</option>
+					<option value="verylow">Very Low</option>
+				</select>
+			</p>
+			<p>
+				<label for="status">Status</label>
+				<select id="status" required>
+					<option value="" disabled="true"> -- Select a Status -- </option>
+					<option value="open">Open</option>
+					<option value="close">Closed</option>
+					<option value="inprog">In Progress</option>
+				</select>
+			</p>
+		    <p>
+<!--
+			<label for="attached">Attach File</label>
+    	        <input type="file" id="attachment" name="attachment" class="abs">
+            </p>
+            <p>
+				<label for="attached" class="btn">Attachment(s):</label>
+                <span class="filelist"></span>
+ -->  	    
+            
+</p>
+            <p>
+				
+                <button type="submit">Save Task</button>
+            </p>
+        </form>
+		</section>
+<!--        
+		<section id="allTasks">
+			<button onclick="viewtasksbyname()">Search Tasks By Name</button>
+        	<button onclick="viewtasksbydate()">Search Tasks by Date</button>
+			<h2>Recently Added Tasks</h2>
+			<form id="searchTasksByName" method="post">
+                <p>
+                    <label for="query">Search</label> 
+                    <input type="search" id="searchtitle" name="searchtitle">
+                    <button type="submit">Search</button>
+                </p>
+            </form>
+			<form id="searchTasksByDate" method="get">
+                <p>
+                    <label for="fromdate">From Date</label> 
+                    <input type="date" id="fromdate" name="fromdate">
+					<label for="todate">To Date</label> 
+					<input type="date" id="todate" name="todate">
+                    <button type="submit">Search</button>
+                </p>
+            </form>
+            <table id="taskList">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+						<th>Time</th>
+						<th>Priority</th>
+						<th>Status</th>
+                        <th>Updated</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>    
+        </section>
+    </main>
+-->
+<script src="js/database.js"></script>
+</body>
+</html>

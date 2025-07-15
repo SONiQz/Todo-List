@@ -1,0 +1,17 @@
+/* CSS Document */
+#addTask{
+	display: none;
+}
+
+
+#allTasks{
+	display: block;
+}
+
+#searchTasksByDate{
+	display: none;
+}
+
+#searchTasksByName{
+	display: block;
+}

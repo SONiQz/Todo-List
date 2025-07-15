@@ -1,0 +1,161 @@
+/* Making the Background Gradient and setting defaults */
+body{
+	height: 100vh;
+	background-repeat: no-repeat;
+    	background-attachment: fixed;
+	background-image: linear-gradient(#3277A8,#EFEFEF);
+	font-family: sans-serif;
+	overflow-x:hidden;
+}
+
+/* Setting the Stage, hiding content thats not needed */
+#addTask{
+ display: none;
+}
+
+#updateTask{
+ display: none;
+}
+
+h2{
+	text-align: center;
+}
+
+section{
+	padding-top: 2%;
+	padding-bottom: 4%;
+	border-radius: 4px;
+	background-color: #FFFFFF;
+	max-width: 80%;
+	margin-top: 5%;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 10px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	
+}
+
+#tableAllTasks, #addForm, #updateForm{
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}
+
+/* CSS for the Main Task List Display */
+
+#taskList p{
+	text-align: center;
+}
+
+#tableAllTasks th{
+	background-color: #3277A8;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+/* setting dynamic font size for cross-device handling */
+#tableAllTasks td{
+	font-size: .8em;
+}
+
+/* Add and Update larger text field sizing */
+#title, #description, #updtitle, #upddescription{
+	width: 70%;
+}
+
+/* Add and Update section table sizing handling */
+#table1, #table2{
+	width:100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#table2{
+	padding-top: 2.5%;
+}
+
+/* setting the position of the smaller text fields to make them appear less out of whack */
+#table2 > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > label:nth-child(1),
+#table2 > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > label:nth-child(1)
+{
+	padding-left: 22%;
+}
+
+#table2 > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) > label:nth-child(1),
+#table2 > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(2) > label:nth-child(1)
+{
+	padding-left: 12%;
+}
+
+/* input field sizing */
+#table2 input[type=date], #table2 input[type=time], #table2 select{
+	padding-left:5%;
+	width: 50%;
+}
+
+/* positioning of image selection file browser button */
+#table2 #tableBrowse{
+	padding-top: 2.5%;
+}
+
+
+/* Positioning of Add, Update, Cancel buttons */
+#bottomButtons{
+	padding-top: 2.5%;
+	padding-left: 69%;
+}
+
+/* set sizepositioning of input field labels */
+label{
+	display: inline-block;
+	text-align: right;
+	width: 18%;
+}
+
+
+/* Making input fields less boring by adding a radius and drop shadows */
+input[type=text], textarea, input[type=date], input[type=time], select{
+	border-radius: 10px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	font-family: sans-serif;
+	
+}
+
+/* give image some breathing room in Update Section */
+tr#viewImage td{
+	padding-top: 2%;
+}
+
+
+/* Giving buttons some colour - Green is for Add or Update, Red for Delete, Blue for Cancel */
+input[type=button], input[type=submit], button{
+	border-radius: 8px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	font-family: sans-serif;
+}
+
+input#addButton, button#addButton{
+	background-color: #4CAF50;
+}
+
+input#addButton:hover, button#addButton:hover{
+	background-color: #0fdb5e;
+}
+
+button#delButton{
+	background-color: #AF4C50;
+}
+
+
+button#delButton:hover{
+	background-color: #db0f5e;
+}
+
+button#canButton{
+	background-color: #1453b3;
+}
+
+
+button#canButton:hover{
+	background-color: #1865d9;
+}
